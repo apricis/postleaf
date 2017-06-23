@@ -114,7 +114,7 @@ Promise.resolve()
     app.use(ErrorController.applicationError);
 
     // Start sailing! ⚓️
-    app.listen(process.env.APP_PORT, () => {
+    app.listen(process.env.PORT, () => {
       console.info('Postleaf publishing on port %d! 🌱', process.env.APP_PORT);
     });
   })
