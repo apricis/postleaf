@@ -114,13 +114,13 @@ Promise.resolve()
     app.use(ErrorController.applicationError);
 
     // Start sailing! ⚓️
-    app.listen(process.env.PORT, () => {
-      console.info('Postleaf publishing on port %d! 🌱', process.env.APP_PORT);
+    app.listen(process.env.PORT || 8080, () => {
+      console.info('Postleaf publishing on port %d!', process.env.PORT);
     });
   })
   .catch((err) => {
     console.error(
-      Chalk.red('Error: ') + 'Postleaf failed to start! 🐛\n\n' +
+      Chalk.red('Error: ') + 'Postleaf failed to start!\n\n' +
       Chalk.red(err.stack)
     );
   });
