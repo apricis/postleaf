@@ -63,12 +63,14 @@ Promise.resolve()
   // Load settings into app.locals.Settings
   .then(() => Database.loadSettings())
   .then((settings) => app.locals.Settings = settings)
+
   // Load navigation into app.locals.Navigation
   .then(() => Database.sequelize.models.navigation.getArray())
   .then((navigation) => app.locals.Navigation = navigation)
   // Load i18n into app.locals.I18n
   .then(() => {
     app.locals.I18n = I18n;
+    app.locals.Settings.language = 'uk-ua';
     return app.locals.I18n.load(app.locals.Settings.language);
   })
   // Start the app
