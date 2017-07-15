@@ -5,13 +5,18 @@ const Mkdirp = require('mkdirp');
 const Path = require('path');
 const Promise = require('bluebird');
 const Sequelize = require('sequelize');
-let databasePath = Path.join(__basedir, 'data/database.sq3');
 
-const sequelize = new Sequelize(null, null, null, {
-  dialect: 'sqlite',
+var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+const sequelize = new Sequelize(match[5], match[1], match[2], {
+  dialect: 'postgres',
+  protocol: 'postgres',
   benchmark: false,
-  logging: false, // console.log
-  storage: databasePath
+  logging: false, //console.log
+  port: match[4],
+  host: match[3],
+  dialectOptions: {
+    ssl: true
+  }
 });
 
 // Models
@@ -29,10 +34,6 @@ const upload = sequelize.import(Path.join(__basedir, 'source/models/upload_model
 // Returns a promise.
 //
 function init() {
-  // Create the data directory if it doesn't exist
-  let path = Path.join(__basedir, 'data');
-  Mkdirp.sync(path);
-
   // Create missing tables and sync models
   return sequelize.sync();
 }

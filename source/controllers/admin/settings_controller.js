@@ -38,7 +38,7 @@ module.exports = {
       models.post.findAll({
         attributes: ['id', 'slug', 'title'],
         where: {
-          isPage: 1,
+          isPage: true,
           status: 'published',
           publishedAt: { $lt: Moment().utc().toDate() }
         },
