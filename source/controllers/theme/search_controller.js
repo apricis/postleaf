@@ -27,7 +27,7 @@ module.exports = {
       .search(req.query.s, {
         where: {
           status: 'published',
-          isPage: 0,
+          isPage: false,
           publishedAt: { $lt: Moment().utc().toDate() }
         },
         limit: limit,

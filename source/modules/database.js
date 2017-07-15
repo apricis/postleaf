@@ -6,17 +6,20 @@ const Path = require('path');
 const Promise = require('bluebird');
 const Sequelize = require('sequelize');
 
-var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
-const sequelize = new Sequelize(match[5], match[1], match[2], {
+// var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+// const sequelize = new Sequelize(match[5], match[1], match[2], {
+const sequelize = new Sequelize('postleaf', 'i3c', 'qwerty123', {
   dialect: 'postgres',
   protocol: 'postgres',
   benchmark: false,
   logging: false, //console.log
-  port: match[4],
-  host: match[3],
-  dialectOptions: {
-    ssl: true
-  }
+  port: 5432,
+  host: 'localhost'
+  // port: match[4],
+  // host: match[3],
+  // dialectOptions: {
+  //   ssl: true
+  // }
 });
 
 // Models

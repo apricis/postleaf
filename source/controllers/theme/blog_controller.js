@@ -28,7 +28,7 @@ module.exports = {
         distinct: true,
         where: {
           status: 'published',
-          isPage: 0,
+          isPage: false,
           publishedAt: { $lt: Moment().utc().toDate() }
         },
         include: [

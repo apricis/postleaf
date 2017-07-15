@@ -25,7 +25,7 @@ module.exports = {
           } : {
             // No custom homepage, return last updated date from all public posts
             status: 'published',
-            isPage: 0,
+            isPage: false,
             publishedAt: { $lt: Moment().utc().toDate() }
           },
           order: [
@@ -37,7 +37,7 @@ module.exports = {
           attributes: ['slug', 'publishedAt', 'createdAt', 'updatedAt'],
           where: {
             status: 'published',
-            isPage: 0,
+            isPage: false,
             publishedAt: { $lt: Moment().utc().toDate() }
           },
           order: [
@@ -49,7 +49,7 @@ module.exports = {
           attributes: ['slug', 'publishedAt', 'createdAt', 'updatedAt'],
           where: {
             status: 'published',
-            isPage: 1,
+            isPage: true,
             publishedAt: { $lt: Moment().utc().toDate() }
           },
           order: [

@@ -61,7 +61,7 @@ module.exports = {
           where: {
             id: { $in: ids },
             status: 'published',
-            isPage: 0,
+            isPage: false,
             publishedAt: { $lt: Moment().utc().toDate() }
           },
           include: [

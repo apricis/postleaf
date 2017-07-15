@@ -38,9 +38,9 @@ module.exports = {
 
     // Filter by flag
     if(flag && flag.length) {
-      if(flag.includes('isPage')) where.isPage = 1;
-      if(flag.includes('isFeatured')) where.isFeatured = 1;
-      if(flag.includes('isSticky')) where.isSticky = 1;
+      if(flag.includes('isPage')) where.isPage = true;
+      if(flag.includes('isFeatured')) where.isFeatured = true;
+      if(flag.includes('isSticky')) where.isSticky = true;
     }
 
     Promise.resolve()
