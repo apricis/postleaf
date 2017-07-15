@@ -542,11 +542,14 @@ module.exports = {
       return next('Invalid JSON string for post parameter.');
     }
 
+    // TODO: queries of type SELECT * FROM posts WHERE id = ':blank'
+    // work with sqlite, but not with postgresql, below is just a quick fix
+
     // Fetch the post, the post's author, and all related tags
     return models.post
       .findOne({
         where: {
-          id: req.params.id
+          id: req.params.id == ':blank' ? null : req.params.id
         },
         include: [
           {

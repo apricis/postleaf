@@ -40,7 +40,7 @@ module.exports = (Settings) => {
 
       // Skip absoulte URLs and URLs where the path is empty
       if(!parsed.hostname && parsed.path) {
-        url = process.env.APP_URL.replace(/\/$/, '') + '/' + parsed.path.replace(/^\//, '');
+        url = process.env[process.env.NODE_ENV.toUpperCase() + '_APP_URL'].replace(/\/$/, '') + '/' + parsed.path.replace(/^\//, '');
       }
 
       return url;

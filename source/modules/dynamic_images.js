@@ -27,7 +27,7 @@ const self = {
   //
   generateUrl: (url, params) => {
     params = params || {};
-    let hostname = Url.parse(process.env.APP_URL).hostname;
+    let hostname = Url.parse(process.env[process.env.NODE_ENV.toUpperCase() + '_APP_URL']).hostname;
     let parsed = Url.parse(url, true);
 
     // Don't modify URLs that point to other hostnames
