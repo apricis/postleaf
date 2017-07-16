@@ -5,7 +5,7 @@
   </div>
   {! Link !}
   <div class="nav-item-field">
-    <input type="text" class="form-control" name="link" value="{link}" placeholder="{@i18n term="link"/}" data-autocomplete>
+    <input type="text" class="form-control" name="link" value="{link}" placeholder="{@i18n term="link"/}">
   </div>
   {! Delete button !}
   <div class="nav-item-remove">

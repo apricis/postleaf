@@ -218,7 +218,7 @@
               {! Image !}
               <div class="col-lg-6">
                 <div class="form-group">
-                  <label>{@i18n term="image"/}</label>
+                  <label>{@i18n term="cover_photo"/}</label>
                   <div
                     class="image-control image-control-sm"
                     data-upload-action="{@url type="api" path="uploads"/}"

@@ -28,13 +28,13 @@
 
   {! Search !}
   <form class="nav-block nav-search" action="{@url type="search"/}" autocomplete="off">
-    <h3>Search</h3>
-    <input type="search" name="s" placeholder="Search">
+    <h3>{@i18n term="search"/}</h3>
+    <input type="search" name="s" placeholder="{@i18n term="search"/}">
   </form>
 
   {! Tags !}
   <div class="nav-block nav-tags clearfix">
-    <h3>Tags</h3>
+    <h3>{@i18n term="tags"/}</h3>
 
     {@getTags sortBy="name"}
       {#tags}
@@ -47,7 +47,7 @@
 
   {! Share !}
   <div class="nav-block nav-share clearfix">
-    <h3>Share</h3>
+    <h3>{@i18n term="share"/}</h3>
     <a class="share-button share-button-twitter" href="https://twitter.com/intent/tweet?text={Settings.title|uc}&amp;url={@url absolute="true"/}">Twitter</a>
     <a class="share-button share-button-facebook" href="https://www.facebook.com/sharer/sharer.php?u={@url absolute="true"/}">Facebook</a>
     <a class="share-button share-button-gp" href="https://plus.google.com/share?url={@url absolute="true"/}">Google+</a>
