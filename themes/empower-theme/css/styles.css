@@ -578,7 +578,7 @@ html a.tag:hover {
 }
 
 .cover.cover-full {
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .cover-body {
