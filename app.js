@@ -19,6 +19,7 @@ const Fs = require('fs');
 const Path = require('path');
 const Promise = require('bluebird');
 const Slashes = require('connect-slashes');
+const Helmet = require('helmet')
 
 // Local modules
 const DustEngine = require(Path.join(__basedir, 'source/modules/dust_engine.js'));
@@ -40,15 +41,6 @@ const ErrorController = require(Path.join(__basedir, 'source/controllers/error_c
 // Database
 const Database = require(Path.join(__basedir, 'source/modules/database.js'));
 app.locals.Database = Database;
-
-function ensureSecure(req, res, next){
-  if(req.secure){
-    // OK, continue
-    return next();
-  };
-  // handle port numbers if you need non defaults
-  return res.redirect('https://' + req.hostname + req.url); // express 4.x
-}
 
 Promise.resolve()
   // Make sure .env exists
@@ -87,9 +79,15 @@ Promise.resolve()
     // App config
     app.enable('strict routing');
     app.disable('x-powered-by');
-    if (process.env.NODE_ENV === 'production') {
-      app.use(ensureSecure);
-    }
+    // if (process.env.NODE_ENV === 'production') {
+      app.use(Helmet());
+      app.all('*',function(req,res,next){
+        if (req.headers['x-forwarded-proto'] != 'https')
+          res.redirect('https://' + req.hostname + ":3000" + req.url)
+        else
+          next() /* Continue to other routes if we're not redirecting */
+      })
+    // }
 
     // App-level middleware
     app
