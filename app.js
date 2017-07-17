@@ -88,7 +88,7 @@ Promise.resolve()
     app.enable('strict routing');
     app.disable('x-powered-by');
     if (process.env.NODE_ENV === 'production') {
-      app.use('*', ensureSecure);
+      app.use(ensureSecure);
     }
 
     // App-level middleware
