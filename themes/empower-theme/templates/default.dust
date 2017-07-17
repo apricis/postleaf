@@ -12,6 +12,7 @@
 
   {! Custom styles !}
   <link rel="stylesheet" href="{@url type="theme" path="css/styles.css"/}">
+  <link rel="stylesheet" href="{@url type="theme" path="css/font-awesome.min.css"/}">
 
   {! The head helper is required and should always appear before the closing head tag !}
   {@head/}
