@@ -41,6 +41,15 @@ const ErrorController = require(Path.join(__basedir, 'source/controllers/error_c
 const Database = require(Path.join(__basedir, 'source/modules/database.js'));
 app.locals.Database = Database;
 
+function ensureSecure(req, res, next){
+  if(req.secure){
+    // OK, continue
+    return next();
+  };
+  // handle port numbers if you need non defaults
+  res.redirect('https://' + req.hostname + req.url); // express 4.x
+}
+
 Promise.resolve()
   // Make sure .env exists
   .then(() => {
@@ -78,6 +87,9 @@ Promise.resolve()
     // App config
     app.enable('strict routing');
     app.disable('x-powered-by');
+    if (process.env.NODE_ENV === 'production') {
+      app.use('*', ensureSecure);
+    }
 
     // App-level middleware
     app
