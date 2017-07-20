@@ -194,11 +194,11 @@ module.exports = {
               name: user.name,
               email: user.email
             },
-            subject: I18n.term('welcome_to_postleaf'),
+            subject: I18n.term('welcome_to_[postleaf]', { placeholders: { postleaf: req.app.locals.Settings.title } }),
             message: { text: message },
             placeholders: {
-              name: user.name,
-              welcomeToPostleaf: I18n.term('welcome_to_postleaf'),
+              name: I18n.term('dear_[user]', { placeholders: { user: user.name } }),
+              welcomeToPostleaf: I18n.term('welcome_to_[postleaf]', { placeholders: { postleaf: req.app.locals.Settings.title } }),
               yourUsernameIs: I18n.term('your_username_is_[username]', { placeholders: { username: user.username } }),
               yourPasswordIs: I18n.term('your_temporary_password_is_[password]', { placeholders: { password: req.body.password }}),
               followTheLinkBelow: I18n.term('follow_the_link_below_to_login_to_your_account'),
