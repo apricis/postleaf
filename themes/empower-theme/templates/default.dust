@@ -10,7 +10,9 @@
   <link rel="apple-touch-icon" href="{@dynamicImage src=Settings.favicon thumbnail="256"/}">
   <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700|Montserrat:500" rel="stylesheet" type="text/css">
 
-  <meta property="og:description" lang="uk" content="Розповідайте світу про те, що думаєте. Знаходьте однодумців, втілюйте разом цікаві проекти та пишіть про це! Діліться своїм натхненням із спільнотою блогів 'Ліцейські історії'." />
+  <meta property="og:description" content="Розповідайте світу про те, що думаєте. Знаходьте однодумців, втілюйте разом цікаві проекти та пишіть про це! Діліться своїм натхненням із спільнотою блогів 'Ліцейські історії'." />
+
+  <meta property="og:locale" content="uk" />
 
 
   {! Custom styles !}

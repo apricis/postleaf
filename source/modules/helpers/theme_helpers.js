@@ -711,7 +711,7 @@ module.exports = (dust) => {
           html +=
             '<meta name="' +
             He.encode(i, { useNamedReferences: true }) +
-            '" lang="uk" content="' +
+            '" content="' +
             He.encode(meta.twitterCard[i], { useNamedReferences: true }) +
             '">\n';
         }
