@@ -923,7 +923,7 @@ module.exports = (dust) => {
 
     var mins = Math.max(1, Math.ceil(numWords / wordsPerMinute));
 
-    return chunk.write(mins + " " + ukrainian(mins, ["хвилина", "хвилини", "хвилин"]));
+    return chunk.write(mins + " " + ukrainian(mins, ["хвилину", "хвилини", "хвилин"]));
   };
 
   //
