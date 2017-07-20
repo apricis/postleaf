@@ -21,9 +21,9 @@ function handleErrorResponse(req, res, err) {
     let message = I18n.term('this_field_is_invalid');
 
     // Custom message based on field
-    if(err.fields.includes('username')) {
+    if(Object.keys(err.fields).includes('username')) {
       message = I18n.term('this_username_is_already_in_use');
-    } else if(err.fields.includes('email')) {
+    } else if (Object.keys(err.fields).includes('email')) {
       message = I18n.term('this_email_address_is_already_in_use');
     }
 
