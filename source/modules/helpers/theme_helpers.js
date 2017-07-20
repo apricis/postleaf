@@ -698,8 +698,7 @@ module.exports = (dust) => {
             '<meta property="' +
             He.encode(i, { useNamedReferences: true }) +
             '" content="' +
-            He.encode(meta.openGraph[i], { useNamedReferences: true }) +
-            '">\n';
+            meta.openGraph[i] + '">\n';
         }
       }
     }
