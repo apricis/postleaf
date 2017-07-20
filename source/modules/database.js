@@ -14,9 +14,9 @@ const sequelize = new Sequelize(match[5], match[1], match[2], {
   logging: false, //console.log
   port: match[4],
   host: match[3],
-  // dialectOptions: {
-  //   ssl: true
-  // }
+  dialectOptions: {
+    ssl: true
+  }
 });
 
 // Models
