@@ -697,7 +697,7 @@ module.exports = (dust) => {
           html +=
             '<meta property="' +
             He.encode(i, { useNamedReferences: true }) +
-            '" lang="uk" content="' +
+            '" content="' +
             He.encode(meta.openGraph[i], { useNamedReferences: true }) +
             '">\n';
         }
