@@ -79,15 +79,7 @@ Promise.resolve()
     // App config
     app.enable('strict routing');
     app.disable('x-powered-by');
-    // if (process.env.NODE_ENV === 'production') {
-      app.use(Helmet());
-      app.all('*',function(req,res,next){
-        if (req.headers['x-forwarded-proto'] != 'https')
-          res.redirect('https://' + req.hostname + req.url)
-        else
-          next() /* Continue to other routes if we're not redirecting */
-      })
-    // }
+    app.use(Helmet());
 
     // App-level middleware
     app
