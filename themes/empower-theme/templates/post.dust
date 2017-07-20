@@ -32,7 +32,7 @@
       <section class="{@postClass/} body-wrap">
         <h1 class="post-title">{@title editable="true"/}</h1>
         <p class="post-meta">
-          {@date date=publishedAt format="LL"/} &middot; {@readingTime/} min read
+          {@date date=publishedAt format="LL"/} &middot; читати {@readingTime/}
         </p>
 
         {! The content helper is required and should only appear once on the page. Use it where you

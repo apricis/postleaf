@@ -8,6 +8,9 @@ const Path = require('path');
 const Striptags = require('striptags');
 const Trim = require('trim');
 const TruncateHtml = require('truncate-html');
+const Smart = require('smart-plurals');
+// TODO: make generic for any language
+var ukrainian = Smart.Plurals.getRule('uk');
 
 // Local modules
 const AdminMenu = require(Path.join(__basedir, 'source/modules/admin_menu.js'));
@@ -918,7 +921,9 @@ module.exports = (dust) => {
     let numWords = text.split(' ').length;
     let wordsPerMinute = context.resolve(params.wordsPerMinute) || 225;
 
-    return chunk.write(Math.max(1, Math.ceil(numWords / wordsPerMinute)));
+    var mins = Math.max(1, Math.ceil(numWords / wordsPerMinute));
+
+    return chunk.write(mins + " " + ukrainian(mins, ["хвилина", "хвилини", "хвилин"]));
   };
 
   //

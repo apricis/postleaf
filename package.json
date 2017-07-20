@@ -83,6 +83,7 @@
     "sanitize-filename": "^1.6.1",
     "sequelize": "^3.29.0",
     "slugify": "^1.1.0",
+    "smart-plurals": "1.1.0",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.0",
     "striptags": "^2.2.1",
