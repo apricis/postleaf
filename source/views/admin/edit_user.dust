@@ -70,7 +70,7 @@
 
             <div class="row">
               {! Username !}
-              <div class="col-sm-6">
+              <div class="col-sm-{@in key=User.role value="owner,admin"}6{:else}12{/in}">
                 <div class="form-group">
                   <label for="username">{@i18n term="username"/}</label>
                   <input class="form-control" type="text" name="username" id="username" value="{user.username}">
@@ -81,39 +81,43 @@
               </div>
 
               {! Role !}
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="role">{@i18n term="role"/}</label>
-                  <select
-                    class="form-control"
-                    name="role"
-                    id="role"
-                    {@eq key=user.role value="owner"}disabled{/eq}
-                  >
-                    {@eq key=user.role value="owner"}
-                      {! The owner role can't be reassigned !}
-                      <option value="owner" selected>
-                        {@i18n term="owner"/}
-                      </option>
-                    {:else}
-                      {! All other roles !}
-                      <option value="contributor" {@eq key=user.role value="contributor"}selected{/eq}>
-                        {@i18n term="contributor"/}
-                      </option>
-                      <option value="editor" {@eq key=user.role value="editor"}selected{/eq}>
-                        {@i18n term="editor"/}
-                      </option>
-                      <option value="admin" {@eq key=user.role value="admin"}selected{/eq}>
-                        {@i18n term="administrator"/}
-                      </option>
-                    {/eq}
-                  </select>
-                  <p class="form-text">
-                    {@i18n term="roles_determine_what_features_a_user_has_access_to"/}
-                  </p>
+              {@in key=User.role value="owner,admin"}
+                {! A new role can be assigned only by ower or admin !}
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="role">{@i18n term="role"/}</label>
+                    <select
+                      class="form-control"
+                      name="role"
+                      id="role"
+                      {@eq key=user.role value="owner"}disabled{/eq}
+                    >
+                      {@eq key=user.role value="owner"}
+                        {! The owner role can't be reassigned !}
+                        <option value="owner" selected>
+                          {@i18n term="owner"/}
+                        </option>
+                      {:else}
+                        {! All other roles !}
+                        <option value="contributor" {@eq key=user.role value="contributor"}selected{/eq}>
+                          {@i18n term="contributor"/}
+                        </option>
+                        <option value="editor" {@eq key=user.role value="editor"}selected{/eq}>
+                          {@i18n term="editor"/}
+                        </option>
+                        <option value="admin" {@eq key=user.role value="admin"}selected{/eq}>
+                          {@i18n term="administrator"/}
+                        </option>
+                      {/eq}
+                    </select>
+                    <p class="form-text">
+                      {@i18n term="roles_determine_what_features_a_user_has_access_to"/}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              {/in}
             </div>
+            
 
             {! Change password !}
             {?user.id}
