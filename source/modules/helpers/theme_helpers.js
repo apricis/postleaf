@@ -697,7 +697,7 @@ module.exports = (dust) => {
           html +=
             '<meta property="' +
             He.encode(i, { useNamedReferences: true }) +
-            '" content="' +
+            '" lang="uk" content="' +
             He.encode(meta.openGraph[i], { useNamedReferences: true }) +
             '">\n';
         }
@@ -711,7 +711,7 @@ module.exports = (dust) => {
           html +=
             '<meta name="' +
             He.encode(i, { useNamedReferences: true }) +
-            '" content="' +
+            '" lang="uk" content="' +
             He.encode(meta.twitterCard[i], { useNamedReferences: true }) +
             '">\n';
         }
