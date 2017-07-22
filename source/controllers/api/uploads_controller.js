@@ -8,6 +8,8 @@ const Gm = require('gm');
 const HttpCodes = require('http-codes');
 const Moment = require('moment');
 const Path = require('path');
+const Request = require('request');
+const AWS = require('aws-sdk');
 const Promise = require('bluebird');
 
 // Local modules
@@ -179,7 +181,7 @@ const self = {
         // Extension should be lowercase and without a dot
         extension: Path.extname(req.file.filename).toLowerCase().replace(/^\./, ''),
         // Path should be relative to the base dir. Example: /uploads/2017/01/image.png
-        path: req.file.path.substring(__basedir.length),
+        path: req.file.location,
         mimeType: req.file.mimetype,
         size: req.file.size,
         width: null,
@@ -189,42 +191,34 @@ const self = {
       // Process images (all but SVG)
       if(['image/gif', 'image/jpeg', 'image/png'].includes(req.file.mimetype)) {
         // Load the image
-        Gm(req.file.path)
+        var image = Request(req.file.location);
+
+        Gm(image)
           // Adjust orientation
           .autoOrient()
           // Strip exif data
           .noProfile()
-          // Save to file
-          .write(req.file.path, (err) => {
-            if(err) {
+        
+        // Get the image's dimensions
+        Gm(image).size((err, info) => {
+          if(err) {
+            res.status(HttpCodes.BAD_REQUEST);
+            return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
+          }
+
+          // Set dimensions
+          file.width = info.width;
+          file.height = info.height;
+
+          // Add it to the database and send a response
+          models.upload
+            .create(file)
+            .then((upload) => res.json({ upload: upload }))
+            .catch(() => {
               res.status(HttpCodes.BAD_REQUEST);
               return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
-            }
-
-            // Get the image's dimensions
-            Gm(req.file.path).size((err, info) => {
-              if(err) {
-                res.status(HttpCodes.BAD_REQUEST);
-                return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
-              }
-
-              // Set dimensions
-              file.width = info.width;
-              file.height = info.height;
-
-              // Get updated file size since stripping exif data likely changed it
-              file.size = Fs.statSync(req.file.path).size;
-
-              // Add it to the database and send a response
-              models.upload
-                .create(file)
-                .then((upload) => res.json({ upload: upload }))
-                .catch(() => {
-                  res.status(HttpCodes.BAD_REQUEST);
-                  return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
-                });
             });
-          });
+        });
       } else {
         // Nope, add it to the database and send a response
         models.upload
@@ -265,13 +259,11 @@ const self = {
           throw new Error('Unauthorized');
         }
 
-        // Set download headers
-        res.setHeader('Content-disposition', 'attachment; filename=' + upload.filename);
-        res.setHeader('Content-type', upload.mimeType);
+        var s3 = new AWS.S3();
 
-        // Stream the download
-        let stream = Fs.createReadStream(Path.join(__basedir, upload.path));
-        stream.pipe(res);
+        s3.getObject({Bucket: process.env.S3_BUCKET_NAME, Key: upload.filename})
+          .createReadStream()
+          .pipe(res);
       })
       .catch((err) => next(err));
   },
@@ -361,13 +353,18 @@ const self = {
           throw new Error('Unauthorized');
         }
 
-        // Delete related cache files which are prefixed by SHA256(path)
-        let pathHash = Crypto.createHash('sha256').update(upload.path).digest('hex').substring(0, 10);
-        Del(Path.join(__basedir, 'cache/images/' + pathHash + '.*'));
+        var s3 = new AWS.S3();
 
-        // Delete the file
-        Fs.unlink(Path.join(__basedir, upload.path), () => {
-          // Remove it from the database
+        s3.deleteObjects({
+          Bucket: process.env.S3_BUCKET_NAME,
+          Delete: {
+              Objects: [
+                   { Key: upload.filename }
+              ]
+          }
+        }, function(err, data) {
+          if (err)
+            return console.log(err);
           upload.destroy().then(() => {
             res.json({
               deleted: true

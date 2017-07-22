@@ -6,6 +6,8 @@ const Mkdirp = require('mkdirp');
 const Multer = require('multer');
 const Path = require('path');
 const SanitizeFilename = require('sanitize-filename');
+const AWS = require('aws-sdk');
+const MulterS3 = require('multer-s3');
 
 module.exports = {
 
@@ -33,38 +35,51 @@ module.exports = {
         cb(null, true);
       },
 
-      // Store uploads to disk
-      storage: Multer.diskStorage({
-        destination: (req, file, cb) => {
-          let destination = typeof options.destination === 'function' ? options.destination() : options.destination;
-
-          // Set the target filename to the original filename and sanitize it
-          file.targetName = SanitizeFilename(file.originalname);
-
-          // Create the destination folder if it doesn't exist
-          if(Fs.existsSync(destination)) {
-            let parsed = Path.parse(file.targetName);
-            let i = 0;
-
-            // If a file with this name already exists, append a counter to the target filename
-            if(!options.overwrite) {
-              while(Fs.existsSync(Path.join(destination, file.targetName))) {
-                file.targetName = parsed.name + '_' + (++i) + parsed.ext;
-              }
-            }
-
-            cb(null, destination);
-          } else {
-            Mkdirp.sync(destination);
-            cb(null, destination);
-          }
+      // Store uploads to S3
+      storage: MulterS3({
+        s3: new AWS.S3(),
+        bucket: process.env.S3_BUCKET_NAME,
+        metadata: function (req, file, cb) {
+          cb(null, {fieldname: file.fieldname});
         },
-
-        // Generate filename
-        filename: function(req, file, cb) {
-          cb(null, file.targetName);
+        key: function (req, file, cb) {
+          file.filename = SanitizeFilename(file.originalname);
+          cb(null, file.filename);
         }
       })
+
+      // Store uploads to disk
+      // storage: Multer.diskStorage({
+      //   destination: (req, file, cb) => {
+      //     let destination = typeof options.destination === 'function' ? options.destination() : options.destination;
+
+      //     // Set the target filename to the original filename and sanitize it
+      //     file.targetName = SanitizeFilename(file.originalname);
+
+      //     // Create the destination folder if it doesn't exist
+      //     if(Fs.existsSync(destination)) {
+      //       let parsed = Path.parse(file.targetName);
+      //       let i = 0;
+
+      //       // If a file with this name already exists, append a counter to the target filename
+      //       if(!options.overwrite) {
+      //         while(Fs.existsSync(Path.join(destination, file.targetName))) {
+      //           file.targetName = parsed.name + '_' + (++i) + parsed.ext;
+      //         }
+      //       }
+
+      //       cb(null, destination);
+      //     } else {
+      //       Mkdirp.sync(destination);
+      //       cb(null, destination);
+      //     }
+      //   },
+
+      //   // Generate filename
+      //   filename: function(req, file, cb) {
+      //     cb(null, file.targetName);
+      //   }
+      // })
 
     });
   }
