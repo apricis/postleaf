@@ -79,7 +79,10 @@ Promise.resolve()
     // App config
     app.enable('strict routing');
     app.disable('x-powered-by');
-    app.use(Helmet());
+    // TODO: sniffing should not be allowed (/admin/posts/new issue in Chrome)
+    app.use(Helmet({
+      noSniff: false
+    }));
 
     // App-level middleware
     app
