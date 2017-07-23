@@ -202,7 +202,7 @@ const self = {
         // Get the image's dimensions
         Gm(image).size((err, info) => {
           if(err) {
-            console.log(err);
+            console.log("creating:" + err);
             res.status(HttpCodes.BAD_REQUEST);
             return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
           }
