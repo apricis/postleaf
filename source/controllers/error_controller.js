@@ -38,9 +38,10 @@ module.exports = {
       template = 'application_error';
       viewData = {
         title: I18n.term('application_error'),
-        message: process.env.NODE_ENV !== 'production' ?
-          err.message :
-          I18n.term('sorry_but_something_isnt_working_right_at_the_moment')
+        // message: process.env.NODE_ENV !== 'production' ?
+        //   err.message :
+        //   I18n.term('sorry_but_something_isnt_working_right_at_the_moment')
+        message: err.message
       };
       // Log dev error messages
       if(process.env.NODE_ENV !== 'production') {
