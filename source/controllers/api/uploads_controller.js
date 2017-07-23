@@ -202,6 +202,7 @@ const self = {
         // Get the image's dimensions
         Gm(image).size((err, info) => {
           if(err) {
+            console.log(err);
             res.status(HttpCodes.BAD_REQUEST);
             return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
           }
@@ -215,6 +216,8 @@ const self = {
             .create(file)
             .then((upload) => res.json({ upload: upload }))
             .catch(() => {
+              console.log("On uploading");
+              console.log(file);
               res.status(HttpCodes.BAD_REQUEST);
               return next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
             });
@@ -225,6 +228,8 @@ const self = {
           .create(file)
           .then((upload) => res.json({ upload: upload }))
           .catch(() => {
+            console.log("(2) On uploading");
+            console.log(file);
             res.status(HttpCodes.BAD_REQUEST);
             next(I18n.term('sorry_but_i_cant_seem_to_process_this_image'));
           });
