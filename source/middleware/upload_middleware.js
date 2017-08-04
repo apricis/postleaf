@@ -8,6 +8,8 @@ const Path = require('path');
 const SanitizeFilename = require('sanitize-filename');
 const AWS = require('aws-sdk');
 const MulterS3 = require('multer-s3');
+const uuidv1 = require('uuid/v1');
+
 
 module.exports = {
 
@@ -43,7 +45,9 @@ module.exports = {
           cb(null, {fieldname: file.fieldname});
         },
         key: function (req, file, cb) {
-          file.filename = SanitizeFilename(file.originalname);
+          var uuid4file = uuidv1(),
+              ext = Path.extname(file.originalname).toLowerCase();
+          file.filename = SanitizeFilename(uuid4file + ext);
           cb(null, file.filename);
         }
       })

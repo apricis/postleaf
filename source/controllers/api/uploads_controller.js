@@ -261,10 +261,10 @@ const self = {
         }
 
         var s3 = new AWS.S3();
-
-        s3.getObject({Bucket: process.env.S3_BUCKET_NAME, Key: upload.filename})
-          .createReadStream()
-          .pipe(res);
+        var obj = s3.getObject({Bucket: process.env.S3_BUCKET_NAME, Key: upload.filename});
+        if (obj)
+          obj.createReadStream()
+             .pipe(res);
       })
       .catch((err) => next(err));
   },
