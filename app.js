@@ -109,6 +109,14 @@ Promise.resolve()
     ]);
     app.set('view engine', 'dust');
 
+    // Block UC Browser
+    app.all('*', function(req, res, next) { 
+      if (req.headers['user-agent'].match(/^.*UCBrowser\/.*$/)) {
+        res.redirect('http://outdatedbrowser.com/uk');
+      }
+      next();
+    });
+
     // App routers
     ApiRouter(app);
     AdminRouter(app);
