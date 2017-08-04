@@ -11,6 +11,7 @@ const Path = require('path');
 const Promise = require('bluebird');
 const RecursiveReaddir = require('recursive-readdir');
 const Tmp = require('tmp');
+const AWS = require('aws-sdk');
 
 // Local modules
 const UploadMiddleware = require(Path.join(__basedir, 'source/middleware/upload_middleware.js'));

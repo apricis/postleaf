@@ -20,11 +20,13 @@ module.exports = (dust) => {
     let name = context.resolve(params.name) || '';
     let value = context.resolve(params.value) || '';
     let checked = (context.resolve(params.checked) + '') === 'true';
+    let disabled = (context.resolve(params.disabled) + '') === 'true';
     let radio = (context.resolve(params.radio) + '') === 'true';
 
     let labelClass = 'custom-control custom-' + (radio ? 'radio' : 'checkbox') + ' ' + className;
     let labelType = (radio ? 'radio' : 'checkbox');
     let checkedProp = checked ? ' checked' : '';
+    let disabledProp = disabled ? ' disabled' : '';
     let start = `
       <label class="` + labelClass + `">
         <input
@@ -33,7 +35,7 @@ module.exports = (dust) => {
           id="` + He.encode(id, { useNamedReferences: true }) + `"
           name="` + He.encode(name, { useNamedReferences: true }) + `"
           value="` + He.encode(value, { useNamedReferences: true }) + `"
-          ` + checkedProp + `
+          ` + checkedProp + disabledProp + `
         >
         <span class="custom-control-indicator"></span>
         <span class="custom-control-description">

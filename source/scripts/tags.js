@@ -104,7 +104,9 @@ $(() => {
     let numDeleted = 0;
 
     // Quick confirmation
-    $.alertable.confirm(confirm).then(() => {
+    $.alertable.confirm(confirm, {
+      cancelButton: '<button class="alertable-cancel" type="button">Відмінити</button>'
+    }).then(() => {
       // Start progress
       NProgress.start();
 

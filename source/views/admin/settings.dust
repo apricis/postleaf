@@ -268,7 +268,7 @@
             <div class="form-group" data-backup-options>
               {@htmlCheckbox value="data" checked="true"}{@i18n term="data"/}{/htmlCheckbox}
               {@htmlCheckbox value="themes" checked="true"}{@i18n term="themes"/}{/htmlCheckbox}
-              {@htmlCheckbox value="uploads" checked="true"}{@i18n term="uploads"/}{/htmlCheckbox}
+              {@htmlCheckbox value="uploads" disabled="true"}{@i18n term="uploads"/}{/htmlCheckbox}
             </div>
             <div class="form-group">
               {! Download backup !}

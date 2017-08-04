@@ -939,7 +939,11 @@ $(() => {
     let url = $(this).attr('data-delete-revision');
 
     // Quick confirmation
-    $.alertable.confirm(confirm).then(() => {
+    $.alertable.confirm(confirm, {
+      // TODO: Add proper i18n like {@i18n term="cancel"/}
+      //       Remember, no Dust.js here!
+      cancelButton: '<button class="alertable-cancel" type="button">Відмінити</button>'
+    }).then(() => {
       // Start progress
       NProgress.start();
 
