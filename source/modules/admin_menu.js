@@ -50,7 +50,7 @@ const self = {
     }
 
     // Settings
-    if(['owner', 'admin'].includes(User.role)) {
+    if(['owner'].includes(User.role)) {
       primary.push({
         label: I18n.term('settings'),
         link: MakeUrl.admin('settings'),
