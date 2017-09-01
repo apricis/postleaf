@@ -85,8 +85,8 @@ module.exports = {
           (!create && post.status === 'rejected');
 
         // Generate available statuses
-        if(canPublish) statuses.push({ status: 'published', term: 'published' });
         statuses.push({ status: 'draft', term: 'draft' });
+        if(canPublish) statuses.push({ status: 'published', term: 'published' });
         statuses.push({ status: 'pending', term: 'pending_review' });
         if(canReject) statuses.push({ status: 'rejected', term: 'rejected' });
 
